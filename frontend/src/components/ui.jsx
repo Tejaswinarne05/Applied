@@ -1,0 +1,208 @@
+/**
+ * Shared utility components
+ */
+
+export function KpiCard({ icon: Icon, label, value, unit, color = '#00b4ff', subtitle }) {
+  return (
+    <div
+      className="glass card-hover"
+      style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: 8 }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div>
+          <p style={{ fontSize: 12, color: '#7fb3d3', fontWeight: 500, textTransform: 'uppercase', letterSpacing: 1 }}>
+            {label}
+          </p>
+          <p style={{ fontSize: 28, fontWeight: 800, color, marginTop: 4, lineHeight: 1 }}>
+            {value}
+            {unit && <span style={{ fontSize: 14, fontWeight: 400, color: '#7fb3d3', marginLeft: 4 }}>{unit}</span>}
+          </p>
+          {subtitle && (
+            <p style={{ fontSize: 11, color: '#4a7fa5', marginTop: 4 }}>{subtitle}</p>
+          )}
+        </div>
+        {Icon && (
+          <div
+            style={{
+              width: 44,
+              height: 44,
+              borderRadius: 10,
+              background: `${color}22`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: `1px solid ${color}44`,
+            }}
+          >
+            <Icon size={20} color={color} />
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export function RiskBadge({ level }) {
+  const map = {
+    'LOW':       'risk-low',
+    'MEDIUM':    'risk-medium',
+    'HIGH':      'risk-high',
+    'VERY HIGH': 'risk-very-high',
+  }
+  return (
+    <span
+      className={map[level] || 'risk-low'}
+      style={{
+        padding: '4px 12px',
+        borderRadius: 20,
+        fontSize: 12,
+        fontWeight: 700,
+        letterSpacing: 0.5,
+      }}
+    >
+      {level}
+    </span>
+  )
+}
+
+export function SectionTitle({ children, subtitle }) {
+  return (
+    <div style={{ marginBottom: 20 }}>
+      <h2
+        style={{
+          fontSize: 22,
+          fontWeight: 700,
+          background: 'linear-gradient(135deg,#e8f4ff,#7fb3d3)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        }}
+      >
+        {children}
+      </h2>
+      {subtitle && (
+        <p style={{ fontSize: 13, color: '#4a7fa5', marginTop: 4 }}>{subtitle}</p>
+      )}
+    </div>
+  )
+}
+
+export function NoDataCard({ message = 'No analysis data available.', cta }) {
+  return (
+    <div
+      className="glass"
+      style={{
+        padding: 48,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 12,
+        textAlign: 'center',
+      }}
+    >
+      <div style={{ fontSize: 40 }}>🌊</div>
+      <p style={{ color: '#7fb3d3', fontSize: 15 }}>{message}</p>
+      {cta && <p style={{ color: '#4a7fa5', fontSize: 13 }}>{cta}</p>}
+    </div>
+  )
+}
+
+export function LoadingSpinner({ message = 'Running analysis…' }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, padding: 48 }}>
+      <div
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: '50%',
+          border: '3px solid rgba(0,180,255,0.2)',
+          borderTop: '3px solid #00b4ff',
+          animation: 'spin 1s linear infinite',
+        }}
+      />
+      <p style={{ color: '#7fb3d3', fontSize: 14 }}>{message}</p>
+      <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
+    </div>
+  )
+}
+
+export function ErrorAlert({ message, onDismiss }) {
+  if (!message) return null
+  return (
+    <div
+      style={{
+        background: 'rgba(255,71,87,0.1)',
+        border: '1px solid rgba(255,71,87,0.3)',
+        borderRadius: 10,
+        padding: '12px 16px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        gap: 12,
+        marginBottom: 16,
+      }}
+    >
+      <div>
+        <p style={{ fontSize: 13, fontWeight: 600, color: '#ff4757' }}>Error</p>
+        <p style={{ fontSize: 13, color: '#ff7f8a', marginTop: 4 }}>{message}</p>
+      </div>
+      {onDismiss && (
+        <button
+          onClick={onDismiss}
+          style={{ background: 'none', border: 'none', color: '#ff4757', cursor: 'pointer', fontSize: 18 }}
+        >
+          ×
+        </button>
+      )}
+    </div>
+  )
+}
+
+export function SimDisclaimer() {
+  return (
+    <div
+      style={{
+        background: 'rgba(255,179,0,0.06)',
+        border: '1px solid rgba(255,179,0,0.2)',
+        borderRadius: 8,
+        padding: '10px 16px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 8,
+        marginBottom: 16,
+      }}
+    >
+      <span style={{ fontSize: 14 }}>⚠️</span>
+      <p style={{ fontSize: 12, color: '#ffb300', lineHeight: 1.5 }}>
+        <strong>Educational Simulation Only.</strong> Results are generated by a mathematical model for
+        demonstration purposes. This is NOT an official flood forecasting or emergency alert system.
+      </p>
+    </div>
+  )
+}
+
+export function MathCard({ title, formula, description }) {
+  return (
+    <div className="glass" style={{ padding: 20 }}>
+      <p style={{ fontSize: 12, color: '#00b4ff', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>
+        {title}
+      </p>
+      <div
+        style={{
+          background: 'rgba(0,180,255,0.05)',
+          border: '1px solid rgba(0,180,255,0.15)',
+          borderRadius: 8,
+          padding: '10px 16px',
+          fontFamily: 'monospace',
+          fontSize: 15,
+          color: '#00e5cc',
+          margin: '8px 0',
+        }}
+      >
+        {formula}
+      </div>
+      {description && (
+        <p style={{ fontSize: 12, color: '#4a7fa5', marginTop: 6 }}>{description}</p>
+      )}
+    </div>
+  )
+}
